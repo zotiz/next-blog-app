@@ -97,7 +97,7 @@ const Navbar = () => {
           {toggle && <i className="bx bx-x text-3xl"></i>}
         </div>
         {toggle && (
-          <div className="w-60 min-h-screen flex justify-center items-center gap-8 flex-col text-white absolute top-16 -right-10 bg-lime-600 md:hidden z-50">
+          <div className="w-full max-h-screen flex justify-center items-center gap-6 flex-col text-white absolute top-16 bottom-0 left-0 right-0 bg-lime-600 md:hidden z-50">
             {menuLink.map((item, index) => (
               <Link
                 key={index}
