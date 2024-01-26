@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+
 const ContactPage = () => {
   return (
     <div className="mt-4 md:mt-24 mb-8">
@@ -11,9 +12,13 @@ const ContactPage = () => {
         About Agency
       </h2> */}
         <div className="w-full h-60 md:h-auto relative">
-          <Image src="/contact.png" fill className="object-contain" alt="contact"/>
-        </div>
-
+          <Image
+            src="/contact.png"
+            fill
+            className="object-contain"
+            alt="contact"
+          />
+        </div> 
         <div className="flex flex-col justify-center items-center gap-8 md:gap-12  md:items-start p-4">
           <form action="" className="flex flex-col w-full gap-3">
             <input
