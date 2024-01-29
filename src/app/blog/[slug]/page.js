@@ -1,8 +1,5 @@
 import SocialShare from '@/components/post/SocialShare'
-import AuthorDate from '@/components/post/AuthorDate'
 import Image from 'next/image'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 import { getSinglePosts } from '@/lib/data'
 
 export async function generateMetadata({ params }) {
@@ -22,7 +19,7 @@ const SinglePost = async ({ params }) => {
         <SocialShare />
       </div>
       <div className="flex flex-col gap-5 text-justify">
-        <h2 className="text-2xl font-bold">{data?.title || <Skeleton />}</h2>
+        <h2 className="text-2xl font-bold">{data?.title}</h2>
 
         {/* <AuthorDate userId={post?.userId} /> */}
         <div className="w-full m-auto h-60 sm:h-80 relative">
@@ -33,7 +30,7 @@ const SinglePost = async ({ params }) => {
             className="object-cover"
           />
         </div>
-        <p>{data?.content || <Skeleton />}</p>
+        <p>{data?.content}</p>
       </div>
     </div>
   )

@@ -7,12 +7,12 @@ export const metadata = {
   description: 'Blog page of my-blog-app',
 }
 
-const BlogPage = async() => {
+const BlogPage = async () => {
   const data = await getAllPosts()
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
       {data.map((item) => (
-        <Link key={item._id} href={`/blog/${item._id}`}>
+        <Link key={item._id} href={`/blog/${item?._id}`}>
           <div className="w-full p-3 shadow-md flex flex-col gap-3 rounded-md cursor-pointer">
             <div className="w-full h-52 md:h-48 relative overflow-hidden">
               <Image
@@ -27,8 +27,8 @@ const BlogPage = async() => {
             <div className="flex flex-col gap-2">
               {/* <AuthorAndDate item={item} /> */}
               <div>
-                <h2 className="text-lg font-semibold">{item.title}</h2>
-                <p className="text-gray-500">{item.content}</p>
+                <h2 className="text-lg font-semibold">{item?.title}</h2>
+                <p className="text-gray-500">{item?.content}</p>
               </div>
             </div>
           </div>
@@ -37,6 +37,5 @@ const BlogPage = async() => {
     </div>
   )
 }
-
 
 export default BlogPage
