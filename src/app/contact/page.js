@@ -1,7 +1,10 @@
 
 import React from 'react'
 import Image from 'next/image'
-
+export const metadata = {
+  title: 'Contact | my-blog-app',
+  description: 'Contact page of my-blog-app',
+}
 const ContactPage = () => {
   
   return (

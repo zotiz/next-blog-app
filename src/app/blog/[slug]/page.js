@@ -1,26 +1,20 @@
-'use client'
-import React, { Suspense, useEffect, useState } from 'react'
 import SocialShare from '@/components/post/SocialShare'
 import AuthorDate from '@/components/post/AuthorDate'
 import Image from 'next/image'
-import axios from 'axios'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { getSinglePosts } from '@/lib/data'
 
-const SinglePost = ({ params }) => {
-  const [data, setData] = useState()
-  const getData = async () => {
-    try {
-      const res = await axios.get(`/api/post/${params.slug}`)
-
-      setData(res?.data?.post)
-    } catch (error) {
-      throw error.message
-    }
+export async function generateMetadata({ params }) {
+  const data = await getSinglePosts(params)
+  return {
+    title: data.title,
+    description: data.content,
   }
-  useEffect(() => {
-    getData()
-  }, [])
+}
+const SinglePost = async ({ params }) => {
+  const data = await getSinglePosts(params)
+
   return (
     <div className="md:w-8/12 m-auto py-4">
       <div className="flex items-center gap-2">
@@ -28,7 +22,7 @@ const SinglePost = ({ params }) => {
         <SocialShare />
       </div>
       <div className="flex flex-col gap-5 text-justify">
-        <h2 className="text-2xl font-bold">{data?.title || <Skeleton/>}</h2>
+        <h2 className="text-2xl font-bold">{data?.title || <Skeleton />}</h2>
 
         {/* <AuthorDate userId={post?.userId} /> */}
         <div className="w-full m-auto h-60 sm:h-80 relative">

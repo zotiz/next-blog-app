@@ -1,6 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
 
+export const metadata = {
+  title: 'About | my-blog-app',
+  description: 'About page of my-blog-app',
+}
 const AboutPage = () => {
   return (
     <div className="grid md:grid-cols-2 gap-10 mt-4 md:mt-24 mb-8">
