@@ -1,27 +1,26 @@
-import React from 'react'
+'use client'
+import React, { Suspense, useEffect, useState } from 'react'
 import SocialShare from '@/components/post/SocialShare'
 import AuthorDate from '@/components/post/AuthorDate'
 import Image from 'next/image'
 import axios from 'axios'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-async function getData(params) {
-  const { slug } = params
-  const res = await fetch(`${process.env.LOCAL_DOMAIN}/api/post/${slug}`)
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
+const SinglePost = ({ params }) => {
+  const [data, setData] = useState()
+  const getData = async () => {
+    try {
+      const res = await axios.get(`/api/post/${params.slug}`)
 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
+      setData(res?.data?.post)
+    } catch (error) {
+      throw error.message
+    }
   }
-
-  return res.json()
-}
-
-const SinglePost = async ({ params }) => {
-  const data = await getData(params)
-  const { post } = data
-  console.log(post)
+  useEffect(() => {
+    getData()
+  }, [])
   return (
     <div className="md:w-8/12 m-auto py-4">
       <div className="flex items-center gap-2">
@@ -29,7 +28,8 @@ const SinglePost = async ({ params }) => {
         <SocialShare />
       </div>
       <div className="flex flex-col gap-5 text-justify">
-        <h2 className="text-2xl font-bold">{post?.title}</h2>
+        <h2 className="text-2xl font-bold">{data?.title || <Skeleton/>}</h2>
+
         {/* <AuthorDate userId={post?.userId} /> */}
         <div className="w-full m-auto h-60 sm:h-80 relative">
           <Image
@@ -39,7 +39,7 @@ const SinglePost = async ({ params }) => {
             className="object-cover"
           />
         </div>
-        <p>{post?.content}</p>
+        <p>{data?.content || <Skeleton />}</p>
       </div>
     </div>
   )

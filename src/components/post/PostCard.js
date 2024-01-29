@@ -1,9 +1,8 @@
-import React from 'react'
 import Image from 'next/image'
 import AuthorAndDate from './AuthorAndDate'
 import Link from 'next/link'
+
 const PostCard = ({ item }) => {
- 
   return (
     <Link href={`/blog/${item._id}`}>
       <div className="w-full p-3 shadow-md flex flex-col gap-3 rounded-md">
