@@ -1,9 +1,12 @@
+
 import React from 'react'
 import Image from 'next/image'
 
 const ContactPage = () => {
+  
   return (
     <div className="mt-4 md:mt-24 mb-8">
+   
       <h2 className="text-xl sm:text-2xl font-bold text-blue-700 text-left mb-4">
         Contact Us
       </h2>
@@ -18,7 +21,7 @@ const ContactPage = () => {
             className="object-contain"
             alt="contact"
           />
-        </div> 
+        </div>
         <div className="flex flex-col justify-center items-center gap-8 md:gap-12  md:items-start p-4">
           <form action="" className="flex flex-col w-full gap-3">
             <input
