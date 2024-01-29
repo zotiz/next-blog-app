@@ -1,13 +1,27 @@
-import AuthorDate from '@/components/post/AuthorDate'
+import React from 'react'
 import SocialShare from '@/components/post/SocialShare'
-import AuthorAndDateSkeleton from '@/components/skeleton/AuthorAndDateSkeleton'
-import axios from 'axios'
+import AuthorDate from '@/components/post/AuthorDate'
 import Image from 'next/image'
-import React, { Suspense } from 'react'
+import axios from 'axios'
+
+async function getData(params) {
+  const { slug } = params
+  const res = await fetch(`${process.env.LOCAL_DOMAIN}/api/post/${slug}`)
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+
+  return res.json()
+}
 
 const SinglePost = async ({ params }) => {
-  const data = await fetchDatabyId(params)
-
+  const data = await getData(params)
+  const { post } = data
+  console.log(post)
   return (
     <div className="md:w-8/12 m-auto py-4">
       <div className="flex items-center gap-2">
@@ -15,11 +29,8 @@ const SinglePost = async ({ params }) => {
         <SocialShare />
       </div>
       <div className="flex flex-col gap-5 text-justify">
-        <h2 className="text-2xl font-bold ">{data?.title}</h2>
-        {/* <Suspense fallback={<AuthorAndDateSkeleton />}>
-          <AuthorDate userId={data.userId} />
-        </Suspense> */}
-
+        <h2 className="text-2xl font-bold">{post?.title}</h2>
+        {/* <AuthorDate userId={post?.userId} /> */}
         <div className="w-full m-auto h-60 sm:h-80 relative">
           <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuATDVEWn3SJgoOAsEECpmJgzo8-AIj6CajKX_XjpdLczRvkw7VXEx2zWsql5VjNSWM7M&usqp=CAU"
@@ -28,22 +39,10 @@ const SinglePost = async ({ params }) => {
             className="object-cover"
           />
         </div>
-        <p>{data?.content}</p>
+        <p>{post?.content}</p>
       </div>
     </div>
   )
 }
 
 export default SinglePost
-
-const fetchDatabyId = async (params) => {
-  const { slug } = params
-
-  try {
-    const res = await axios.get(`${process.env.LOCAL_DOMAIN}/api/post/${slug}`)
-    return res?.data?.post
-  } catch (error) {
-    console.log('data fetching error ', error.message)
-    return error.response?.data
-  }
-}
