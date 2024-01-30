@@ -18,7 +18,7 @@ const menuLink = [
   },
   {
     title: "Blog",
-    link: "/blog",
+    link: "/post",
   },
 ];
 const Navbar = () => {

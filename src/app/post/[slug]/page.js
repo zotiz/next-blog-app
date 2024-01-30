@@ -1,6 +1,6 @@
 import SocialShare from '@/components/post/SocialShare'
-import Image from 'next/image'
 import { getSinglePosts } from '@/lib/data'
+import Image from 'next/image'
 
 export async function generateMetadata({ params }) {
   const data = await getSinglePosts(params)
@@ -19,7 +19,7 @@ const SinglePost = async ({ params }) => {
         <SocialShare />
       </div>
       <div className="flex flex-col gap-5 text-justify">
-        <h2 className="text-2xl font-bold">{data?.title}</h2>
+        <h2 className="text-2xl font-bold">{data && data.title}</h2>
 
         {/* <AuthorDate userId={post?.userId} /> */}
         <div className="w-full m-auto h-60 sm:h-80 relative">
@@ -30,7 +30,7 @@ const SinglePost = async ({ params }) => {
             className="object-cover"
           />
         </div>
-        <p>{data?.content}</p>
+        <p>{data && data.content}</p>
       </div>
     </div>
   )

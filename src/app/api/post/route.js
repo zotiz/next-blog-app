@@ -1,12 +1,12 @@
 import connectionDB from '@/db.config/db'
 import { NextResponse } from 'next/server'
 import { PostModel } from '@/model/post.model'
-connectionDB()
+
 
 export const POST = async (request) => {
   try {
+    connectionDB()
     const reqBody = await request.json()
-    console.log(reqBody)
     const { title, content, slug } = reqBody
     const existingPostOne = await PostModel.findOne({ title })
     if (existingPostOne)
@@ -29,6 +29,7 @@ export const POST = async (request) => {
 
 export const GET = async (request) => {
   try {
+    connectionDB()
     const allPosts = await PostModel.find()
     return NextResponse.json({
       message: 'All Posts fetching successfully!!',
