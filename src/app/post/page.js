@@ -1,14 +1,28 @@
-import { getAllPosts } from '@/lib/data'
+'use client'
+import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
+import React, { useState, useEffect } from 'react'
 
-export const metadata = {
-  title: 'Blog | my-blog-app',
-  description: 'Blog page of my-blog-app',
-}
+// export const metadata = {
+//   title: 'Blog | my-blog-app',
+//   description: 'Blog page of my-blog-app',
+// }
 
-const BlogPage = async () => {
-  const data = await getAllPosts()
+const BlogPage =  () => {
+  const [data, setData] = useState([])
+  async function getAllPosts() {
+    try {
+      const res = await axios.get(`/api/post`)
+      setData(res.data.allPosts)
+    } catch (error) {
+      console.error('Error fetching all posts:', error.message)
+      throw error.message
+    }
+  }
+  useEffect(() => {
+    getAllPosts()
+  }, [])
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
       {data.length > 0 &&
