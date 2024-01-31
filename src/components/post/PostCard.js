@@ -19,7 +19,7 @@ const PostCard = ({ items }) => {
               />
             </div>
             <div className="flex flex-col gap-2">
-              {/* <AuthorAndDate item={item} /> */}
+              <AuthorAndDate item={items} /> 
               <div>
                 <h2 className="text-lg font-semibold">{items.title}</h2>
                 <p className="text-gray-500">{items.content}</p>

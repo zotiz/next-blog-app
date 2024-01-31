@@ -1,6 +1,7 @@
+import AuthorDate from '@/components/post/AuthorDate'
 import SocialShare from '@/components/post/SocialShare'
 import Image from 'next/image'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 async function getSinglePosts(params) {
   const res = await fetch(
@@ -31,7 +32,8 @@ const SinglePost = async ({ params }) => {
       <div className="flex flex-col gap-5 text-justify">
         <h2 className="text-2xl font-bold">{post?.title}</h2>
 
-        {/* <AuthorDate userId={post?.userId} /> */}
+        <AuthorDate item={post} />
+
         <div className="w-full m-auto h-60 sm:h-80 relative">
           <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuATDVEWn3SJgoOAsEECpmJgzo8-AIj6CajKX_XjpdLczRvkw7VXEx2zWsql5VjNSWM7M&usqp=CAU"
