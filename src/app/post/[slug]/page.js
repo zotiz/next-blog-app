@@ -1,31 +1,27 @@
-'use client'
 import SocialShare from '@/components/post/SocialShare'
-import axios from 'axios'
 import Image from 'next/image'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
-// export async function generateMetadata({ params }) {
-//   const data = await getSinglePosts(params)
-//   return {
-//     title: data.title,
-//     description: data.content,
-//   }
-// }
-const SinglePost = ({ params }) => {
-  const [data, setData] = useState()
-
-  async function getSinglePosts() {
-    try {
-      const res = await axios.get(`/api/post/${params.slug}`)
-      setData(res.data.post)
-    } catch (error) {
-      console.error('Error fetching single post:', error.message)
-      throw error.message
-    }
+async function getSinglePosts(params) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_DOMAIN}/api/post/${params.slug}`,
+  )
+  if (!res.ok) {
+    throw new Error('Failed to fetch data!')
   }
-  useEffect(() => {
-    getSinglePosts()
-  }, [])
+  return res.json()
+}
+
+export async function generateMetadata({ params }) {
+  const { post } = await getSinglePosts(params)
+  return {
+    title: post.title,
+    description: post.content,
+  }
+}
+const SinglePost = async ({ params }) => {
+  const { post } = await getSinglePosts(params)
+
   return (
     <div className="md:w-8/12 m-auto py-4">
       <div className="flex items-center gap-2">
@@ -33,7 +29,7 @@ const SinglePost = ({ params }) => {
         <SocialShare />
       </div>
       <div className="flex flex-col gap-5 text-justify">
-        <h2 className="text-2xl font-bold">{data?.title}</h2>
+        <h2 className="text-2xl font-bold">{post?.title}</h2>
 
         {/* <AuthorDate userId={post?.userId} /> */}
         <div className="w-full m-auto h-60 sm:h-80 relative">
@@ -44,7 +40,7 @@ const SinglePost = ({ params }) => {
             className="object-cover"
           />
         </div>
-        <p>{data?.content}</p>
+        <p>{post?.content}</p>
       </div>
     </div>
   )
